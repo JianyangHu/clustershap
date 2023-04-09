@@ -28,9 +28,6 @@ if uploaded_file is not None:
 
 
 
-
-
-
     col = st.multiselect(
         'select columns',
         list(data.columns),
@@ -53,6 +50,22 @@ if st.button('Start clustershap'):
 
     km=KMeans(k).fit(data)
 
+    #####pca####
+    pca=PCA().fit(data)
+    embedding = pca.fit_transform(data)
+
+    plt.figure()
+    plt.scatter(embedding[:, 0], embedding[:, 1], c=km.predict(data))
+    plt.savefig("pca.jpg")
+
+    image1 = Image.open("pca.jpg")
+    
+    st.image(image1)
+
+    plt.show()
+
+
+
     #######xgb+shap####
 
 
@@ -61,6 +74,8 @@ if st.button('Start clustershap'):
 
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(data)
+
+    plt.figure()
     shap.summary_plot(shap_values, data, show = False)
  
     plt.savefig("all.jpg")
@@ -68,6 +83,8 @@ if st.button('Start clustershap'):
     image1 = Image.open("all.jpg")
     
     st.image(image1)
+
+    plt.show()
 
     for i in range(k):
     
@@ -80,6 +97,8 @@ if st.button('Start clustershap'):
         st.image(image1)
 
         plt.show()
+
+
 
 
 
