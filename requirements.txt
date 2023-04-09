@@ -1,4 +1,8 @@
 pip
+numba==0.56.4
+numpy==1.23.4
+
+
 matplotlib
 shap
 Pillow
