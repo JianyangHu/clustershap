@@ -26,15 +26,31 @@ if uploaded_file is not None:
 
 
 
-###########cluster##########
 
-k=st.selectbox(
-"cluster number",
-set(range(0,10))
-)
+
+
+
+
+    col = st.multiselect(
+        'select columns',
+        list(data.columns),
+        list(data.columns))
+
+
+    ###########cluster##########
+
+    k=st.selectbox(
+    "cluster number",
+    set(range(0,10))
+    )
+
+
+
 
 if st.button('Start clustershap'):
     
+    data=data[col]
+
     km=KMeans(k).fit(data)
 
     #######xgb+shap####
